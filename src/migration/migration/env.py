@@ -1,22 +1,27 @@
-import sys, os
+import sys
 from pathlib import Path
 
-# Lấy đường dẫn tuyệt đối của file env.py hiện tại
 current_dir = Path(__file__).resolve().parent
-print(f"Current dir: {current_dir}")
-# Đi ngược lên các thư mục cha để đến thư mục gốc của project
-project_root = current_dir.parent.parent.parent  # Đi từ migration/migration/ lên đến Minimal/
-print(f"Project root: {project_root}")
-# Thêm project_root vào sys.path
+project_root = current_dir.parent.parent.parent # Thư mục gốc của project
 sys.path.insert(0, str(project_root))
+
+
+from src.base.config import Config
+
+
+from src.base.database.model.base import Base
+from src.health.database.model.health_check.main import HealthCheck
+
+
+from os import environ
+from dotenv import load_dotenv
+env_path = project_root / '.env'
+load_dotenv(env_path)
 
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
-from src.base.database.model.base import Base
-from src.base.config import Config
 
 from alembic import context
 
@@ -34,7 +39,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -43,7 +48,7 @@ target_metadata = None
 
 
 def get_database_url() -> str:
-    conf = Config()
+    conf = Config(environ)
     db_prefix = "DB"
     db_host = conf.require_config(f"{db_prefix}_HOST")
     db_port = conf.require_config(f"{db_prefix}_PORT")

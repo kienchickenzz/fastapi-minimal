@@ -40,7 +40,7 @@ class Config:
         if name not in self.config_map:
             raise ConfigValueMissingError(f"{name} isn't present in the config")
 
-        value = self.config_map.get(name).lower()
+        value = self.config_map[name].lower()
         if value in true_values:
             return True
         if value in false_values:
@@ -63,7 +63,7 @@ class Config:
         if name not in self.config_map:
             raise ConfigValueMissingError(f"{name} isn't present in the config")
 
-        value = self.config_map.get(name)
+        value = self.config_map[name]
         try:
             return int(value)
         except ValueError as error:
@@ -84,7 +84,7 @@ class Config:
         if name not in self.config_map:
             raise ConfigValueMissingError(f"{name} isn't present in the config")
 
-        value = self.config_map.get(name)
+        value = self.config_map[name]
         try:
             return float(value)
         except ValueError as err:
@@ -103,7 +103,7 @@ class Config:
         if name not in self.config_map:
             raise ConfigValueMissingError(f"{name} isn't present in the config")
 
-        value = self.config_map.get(name)
+        value = self.config_map[name]
         try:
             return value.split(separator)
         except ValueError as err:

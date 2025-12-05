@@ -8,7 +8,7 @@ from src.health.health_initializer import HealthInitializer
 from src.health.endpoint.main import main_router as router_health
 from src.health.doc import Tags
 
-load_dotenv('src/.env')
+load_dotenv('.env')
 config = Config(environ)
 
 app = create_fastapi_app(
