@@ -8,6 +8,10 @@ from src.health.dto.main import HealthCheckRequest
 
 router = APIRouter(tags=[Tags.HEALTH], prefix="/health")
 
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 @router.post(
     path="/",
     summary="Health Check",
@@ -43,5 +47,23 @@ async def get_health(
     page_size = request.page_size
 
     result = await health_check_service.get_health_checks(target_page, page_size)
+    
+    return JSONResponse(content=result[0], status_code=200)
+
+@router.get(
+    path="/db",
+    summary="Database Health Check",
+    description="Check database health status",
+    status_code=200,
+)
+async def get_db_health(
+    request: HealthCheckRequest = Depends(HealthCheckRequest.as_query),
+    health_check_service: HealthCheckService = Injects("health_check_service"),
+):
+    target_page = request.target_page
+    page_size = request.page_size
+
+    result = await health_check_service.get_db_health_checks(target_page, page_size)
+    logging.info(result)
     
     return JSONResponse(content=result[0], status_code=200)

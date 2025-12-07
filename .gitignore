@@ -7,6 +7,7 @@ uv.lock
 
 # Environments
 .env
+.env.dev
 
 # Docker
 **/volumes
@@ -17,4 +18,3 @@ uv.lock
 # Vscode
 **/.vscode
 **/.mypy_cache
-

@@ -15,7 +15,7 @@ from src.health.database.model.health_check.main import HealthCheck
 
 from os import environ
 from dotenv import load_dotenv
-env_path = project_root / '.env'
+env_path = project_root / '.env.dev'
 load_dotenv(env_path)
 
 from logging.config import fileConfig
