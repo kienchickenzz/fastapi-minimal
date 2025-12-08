@@ -93,8 +93,10 @@ class Repository(ABC, Generic[T]):
             query = select(self._model)
 
             # Apply pagination
-            if skip and limit:
-                query = query.offset(skip).limit(limit)
+            if skip:
+                query = query.offset(skip)
+            if limit:
+                query = query.limit(limit)
 
             scalars = await session.scalars(query)
             result = scalars.unique().all()
