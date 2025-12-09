@@ -71,7 +71,7 @@ def create_fastapi_app(
         version=version,
         summary=summary,
         contact={"name": team_name, "url": team_url},
-        exception_handlers={HTTPException: rest_exception_handler},
+        exception_handlers={HTTPException: rest_exception_handler}, # Handle business logic exceptions
         swagger_ui_parameters={
             "defaultModelsExpandDepth": -1,  # collapse/remove schemas by default in swagger UI
         },
@@ -84,7 +84,7 @@ def create_fastapi_app(
 
     # Required middleware
     # app.add_middleware(LoggingMiddleware)  # This is the most inner middleware right before the router.
-    app.add_middleware(GlobalExceptionMiddleware)
+    app.add_middleware(GlobalExceptionMiddleware) # Handle unexpected exceptions
     app.add_middleware(
         CORSMiddleware,
         allow_origins=(

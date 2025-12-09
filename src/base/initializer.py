@@ -3,7 +3,6 @@ from typing import Optional, Type, Mapping, Any
 
 from fastapi import FastAPI
 
-# local imports
 from src.base.middleware.global_exception import GlobalExceptionMiddleware
 from src.base.config import Config
 from src.base.engine_factory import EngineFactory
